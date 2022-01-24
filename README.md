@@ -32,6 +32,27 @@ go run cmd/service.go
 - `REDIS_PASSWORD` (Default: none) - Connection password
 - `REDIS_DATABASE` (Default: `0`) - Redis DB number
 
+## Deployments
+
+### Using Docker
+
+Docker BuildKit is preferred where available.
+
+```shell
+docker build -t otter-im/identity:latest -f build/package/Dockerfile .
+```
+
+### Using systemd
+```shell
+./scripts/build.sh
+sudo cp ./dist/otter-identity /usr/bin/otter-identity
+sudo cp ./init/otter-identity.service /etc/systemd/system/otter-identity.service
+sudo systemctl daemon-reload
+sudo systemctl enable --now otter-identity.service
+```
+
 ## License
 
-We're MIT.
+MIT License. Copyright (c) 2022 Otter Social. 
+
+See the LICENCE file for the full terms.
