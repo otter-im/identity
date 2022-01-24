@@ -1,6 +1,6 @@
 # Otter Social > Identity Service
 
-A gRPC identity service, for user lookups and login validations.
+An OAuth2 identity provider that operates over gRPC.
 
 ## Prerequisites
 
