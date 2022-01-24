@@ -40,7 +40,7 @@ Docker BuildKit is preferred where available.
 
 ```shell
 docker build -t otter-im/identity:latest -f build/package/Dockerfile .
-```
+``` 
 
 ### Using systemd
 ```shell
@@ -50,6 +50,9 @@ sudo cp ./init/otter-identity.service /etc/systemd/system/otter-identity.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now otter-identity.service
 ```
+
+### Using Kubernetes
+Coming soon.
 
 ## License
 
