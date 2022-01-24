@@ -13,17 +13,17 @@ type LookupService struct {
 }
 
 func (s *LookupService) Authorize(ctx context.Context, request *rpc.AuthorizationRequest) (*rpc.AuthorizationResponse, error) {
+	user, err := SelectUserByUsername(ctx, request.GetUsername())
+	if err != nil {
+		return nil, err
+	}
+
 	select {
 	case <-s.mainCtx.Done():
 		return nil, errors.New("server stopping")
 	case <-ctx.Done():
 		return nil, errors.New("request cancelled")
 	default:
-	}
-
-	user, err := SelectUserByUsername(ctx, request.GetUsername())
-	if err != nil {
-		return nil, err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(request.Password))
