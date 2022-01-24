@@ -71,6 +71,7 @@ func TestLookupService_Authorize(t *testing.T) {
 	for _, test := range dt {
 		t.Run(test.name, func(t *testing.T) {
 			// Given
+			t.Parallel()
 			service := &LookupService{}
 
 			var expectedId []byte
