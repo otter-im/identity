@@ -19,7 +19,7 @@ func main() {
 	go func() {
 		app.Init()
 
-		err := app.Run(ctx)
+		err := app.Run()
 		if err != nil {
 			cancel()
 		}

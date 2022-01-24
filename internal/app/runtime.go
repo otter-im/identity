@@ -21,7 +21,7 @@ func Init() {
 	mathRand.Seed(time.Now().UnixNano())
 }
 
-func Run(ctx context.Context) error {
+func Run() error {
 	listener, err := net.Listen("tcp", net.JoinHostPort(config.ServiceHost(), config.ServicePort()))
 	if err != nil {
 		return err
