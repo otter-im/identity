@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"errors"
 	"github.com/google/uuid"
 	"github.com/otter-im/identity-service/pkg/rpc"
 	"github.com/stretchr/testify/assert"
@@ -11,6 +12,8 @@ import (
 func TestLookupService_Authorize(t *testing.T) {
 	dt := []struct {
 		name string
+
+		cancelContext bool
 
 		inputUsername string
 		inputPassword string
@@ -57,6 +60,12 @@ func TestLookupService_Authorize(t *testing.T) {
 			expectedId:       "",
 			expectedError:    nil,
 		},
+		{
+			name: "cancelled context",
+
+			cancelContext: true,
+			expectedError: errors.New("context cancelled"),
+		},
 	}
 
 	for _, test := range dt {
@@ -86,13 +95,20 @@ func TestLookupService_Authorize(t *testing.T) {
 				Username: expectedUsername,
 			}
 
+			ctx, cancel := context.WithCancel(context.Background())
+			if test.cancelContext {
+				cancel()
+			}
+
 			// When
-			actual, actualErr := service.Authorize(context.Background(), &rpc.AuthorizationRequest{
+			actual, actualErr := service.Authorize(ctx, &rpc.AuthorizationRequest{
 				Username: test.inputUsername,
 				Password: test.inputPassword,
 			})
 
 			// Then
+			cancel()
+
 			if test.expectedError == nil {
 				assert.Nil(t, actualErr)
 			} else {
