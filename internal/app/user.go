@@ -13,7 +13,8 @@ type User struct {
 
 	Id           uuid.UUID `pg:"id"`
 	Username     string    `json:"username" pg:"username"`
-	PasswordHash string    `json:"-" pg:"password_hash"`
+	Hash         [32]byte  `json:"-" pg:"hash"`
+	Salt         [16]byte  `json:"-" pg:"salt"`
 	CreationDate time.Time `json:"creation_date" pg:"creation_date"`
 }
 

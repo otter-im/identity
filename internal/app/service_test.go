@@ -10,6 +10,8 @@ import (
 )
 
 func TestLookupService_Authorize(t *testing.T) {
+	t.Parallel()
+
 	dt := []struct {
 		name string
 
@@ -27,6 +29,8 @@ func TestLookupService_Authorize(t *testing.T) {
 		{
 			name: "valid login",
 
+			cancelContext: false,
+
 			inputUsername: "tinyfluffs",
 			inputPassword: "changeme",
 
@@ -39,6 +43,8 @@ func TestLookupService_Authorize(t *testing.T) {
 		{
 			name: "wrong password",
 
+			cancelContext: false,
+
 			inputUsername: "tinyfluffs",
 			inputPassword: "here be dragons",
 
@@ -50,6 +56,8 @@ func TestLookupService_Authorize(t *testing.T) {
 		},
 		{
 			name: "unknown user",
+
+			cancelContext: false,
 
 			inputUsername: "alice",
 			inputPassword: "hunter2",
@@ -64,14 +72,13 @@ func TestLookupService_Authorize(t *testing.T) {
 			name: "cancelled context",
 
 			cancelContext: true,
-			expectedError: errors.New("context cancelled"),
+			expectedError: errors.New("context canceled"),
 		},
 	}
 
 	for _, test := range dt {
 		t.Run(test.name, func(t *testing.T) {
 			// Given
-			t.Parallel()
 			service := &LookupService{}
 
 			var expectedId []byte
@@ -96,8 +103,10 @@ func TestLookupService_Authorize(t *testing.T) {
 				Username: expectedUsername,
 			}
 
-			ctx, cancel := context.WithCancel(context.Background())
+			ctx := context.Background()
 			if test.cancelContext {
+				ctx2, cancel := context.WithCancel(ctx)
+				ctx = ctx2
 				cancel()
 			}
 
@@ -108,12 +117,11 @@ func TestLookupService_Authorize(t *testing.T) {
 			})
 
 			// Then
-			cancel()
-
 			if test.expectedError == nil {
 				assert.Nil(t, actualErr)
 			} else {
 				assert.NotNil(t, actualErr)
+				assert.Equal(t, test.expectedError, actualErr)
 			}
 
 			if test.expectResult {
