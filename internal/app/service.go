@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"errors"
+	"github.com/go-pg/pg/v10"
 	"github.com/otter-im/identity-service/pkg/rpc"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -14,6 +15,11 @@ type LookupService struct {
 func (s *LookupService) Authorize(ctx context.Context, request *rpc.AuthorizationRequest) (*rpc.AuthorizationResponse, error) {
 	user, err := SelectUserByUsername(ctx, request.GetUsername())
 	if err != nil {
+		if err == pg.ErrNoRows {
+			return &rpc.AuthorizationResponse{
+				Status: rpc.AuthorizationResponse_FAIL,
+			}, nil
+		}
 		return nil, err
 	}
 
@@ -27,7 +33,7 @@ func (s *LookupService) Authorize(ctx context.Context, request *rpc.Authorizatio
 	if err != nil {
 		if err == bcrypt.ErrMismatchedHashAndPassword {
 			return &rpc.AuthorizationResponse{
-				Status: rpc.AuthorizationResponse_FAIL_MISMATCHED_PASSWORD,
+				Status: rpc.AuthorizationResponse_FAIL,
 			}, nil
 		}
 		return nil, err

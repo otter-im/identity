@@ -20,7 +20,7 @@ message AuthorizationResponse {
   optional string username = 3;
 
   enum Status {
-    FAIL_MISMATCHED_PASSWORD = 0;
+    FAIL = 0;
     SUCCESS = 1;
   }
 }

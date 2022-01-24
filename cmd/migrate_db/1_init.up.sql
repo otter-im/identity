@@ -7,5 +7,5 @@ CREATE TABLE users
 );
 
 /* tinyfluffs | changeme */
-INSERT into users(username, password_hash)
-VALUES ('tinyfluffs', '$2a$12$qqPrblVzy2HqkM6ZBvbNL.UjbTH1WOFDNxjBX2aMsgl3sS1vfJgUG');
+INSERT into users(id, username, password_hash, creation_date)
+VALUES ('d6ef6dc7-ce36-449c-8265-07f60ca3b2ff', 'tinyfluffs', '$2a$12$qqPrblVzy2HqkM6ZBvbNL.UjbTH1WOFDNxjBX2aMsgl3sS1vfJgUG', '2022-01-24 12:00:50.884460');
