@@ -25,6 +25,5 @@ fi
 env CGO_ENABLED=$CGO GOOS=$GOOS GOARCH=$GOARCH go build -ldflags "${ld}" $tag -trimpath -o ${build_dir}/${output_name} $package
 
 if [ $? -ne 0 ]; then
-  echo 'An error has occurred! Aborting the script execution...'
   exit 1
 fi
