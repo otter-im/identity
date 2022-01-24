@@ -15,10 +15,10 @@ if [ "$GOOS" = "windows" ]; then
 fi
 
 if [ "$SERVICE_ENV" = "dev" ]; then
-  ld="-X github.com/otter-im/identity-service/pkg.Version=$(git rev-parse HEAD)"
+  ld="-X github.com/otter-im/identity/pkg.Version=$(git rev-parse HEAD)"
   tag='-tags dev'
 else
-  ld="-X github.com/otter-im/identity-service/pkg.Version=v${version}"
+  ld="-X github.com/otter-im/identity/pkg.Version=v${version}"
   tag=''
 fi
 

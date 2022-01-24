@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"github.com/go-pg/pg/v10"
-	"github.com/otter-im/identity-service/internal/config"
+	"github.com/otter-im/identity/internal/config"
 	"sync"
 )
 

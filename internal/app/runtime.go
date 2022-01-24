@@ -2,8 +2,8 @@ package app
 
 import (
 	"context"
-	"github.com/otter-im/identity-service/internal/config"
-	"github.com/otter-im/identity-service/pkg/rpc"
+	"github.com/otter-im/identity/internal/config"
+	"github.com/otter-im/identity/pkg/rpc"
 	"golang.org/x/exp/rand"
 	"google.golang.org/grpc"
 	"log"

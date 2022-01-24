@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/go-pg/pg/v10"
-	"github.com/otter-im/identity-service/pkg/rpc"
+	"github.com/otter-im/identity/pkg/rpc"
 	"golang.org/x/crypto/bcrypt"
 )
 

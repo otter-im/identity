@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/otter-im/identity-service/internal/app"
+	"github.com/otter-im/identity/internal/app"
 	"os"
 	"os/signal"
 	"syscall"

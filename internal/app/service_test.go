@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/google/uuid"
-	"github.com/otter-im/identity-service/pkg/rpc"
+	"github.com/otter-im/identity/pkg/rpc"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

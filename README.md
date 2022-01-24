@@ -1,4 +1,4 @@
-# Otter Social > Identity Service
+# Otter Social > Identity Provider
 
 An OAuth2 identity provider that operates over gRPC.
 
