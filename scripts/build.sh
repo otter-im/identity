@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-package=cmd/service.go
+package=cmd/otter_identity.go
 package_name=otter-identity
 version=0.0.1
 build_dir=./dist
