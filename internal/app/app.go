@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/golang/glog"
 	"github.com/otter-im/identity-backend/internal/config"
-	"github.com/otter-im/identity-backend/internal/rpc"
+	"github.com/otter-im/identity-backend/pkg/rpc"
 	"golang.org/x/exp/rand"
 	"google.golang.org/grpc"
 	mathRand "math/rand"

@@ -3,7 +3,7 @@ package app
 import (
 	"context"
 	"errors"
-	"github.com/otter-im/identity-backend/internal/rpc"
+	"github.com/otter-im/identity-backend/pkg/rpc"
 	"golang.org/x/crypto/bcrypt"
 )
 
