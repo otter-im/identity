@@ -37,13 +37,13 @@ func Run() error {
 }
 
 func Exit(ctx context.Context) error {
-	select {
-	case <-ctx.Done():
-		return nil
-	default:
-	}
-
 	for _, hook := range exitHooks {
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+		}
+
 		err := hook(ctx)
 		if err != nil {
 			return err
