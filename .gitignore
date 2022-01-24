@@ -49,3 +49,4 @@ $RECYCLE.BIN/
 *.msp
 *.lnk
 go.sum
+dist/
