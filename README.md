@@ -43,6 +43,9 @@ docker build -t otter-im/identity:latest -f build/package/Dockerfile .
 ``` 
 
 ### Using systemd
+
+Make sure to update `otter-identity.service` with the environment for your Postgres and Redis configuration
+
 ```shell
 ./scripts/build.sh
 sudo cp ./dist/otter-identity /usr/bin/otter-identity
