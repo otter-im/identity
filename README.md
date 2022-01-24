@@ -17,7 +17,7 @@ go run cmd/service.go
 
 ## Runtime Envars
 
-- `APP_ENV` (Default: `dev`) - Environment dev or prod
+- `SERVICE_ENV` (Default: `dev`) - Environment dev or prod
 - `SERVICE_HOST` (Default: `0.0.0.0`) - Listening address
 - `SERVICE_PORT` (Default: `50050`) - Listening port
 

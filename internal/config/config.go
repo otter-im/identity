@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-func Environment() string {
-	return envString("APP_ENV", "dev")
+func ServiceEnvironment() string {
+	return envString("SERVICE_ENV", "dev")
 }
 
 func ServiceHost() string {
