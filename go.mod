@@ -1,4 +1,4 @@
-module github.com/otter-im/identity-backend
+module github.com/otter-im/identity-service
 
 go 1.17
 

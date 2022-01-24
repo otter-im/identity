@@ -3,7 +3,7 @@ package app
 import (
 	"github.com/go-redis/cache/v8"
 	"github.com/go-redis/redis/v8"
-	"github.com/otter-im/identity-backend/internal/config"
+	"github.com/otter-im/identity-service/internal/config"
 	"sync"
 )
 

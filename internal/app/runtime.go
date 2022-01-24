@@ -3,8 +3,8 @@ package app
 import (
 	"context"
 	"github.com/golang/glog"
-	"github.com/otter-im/identity-backend/internal/config"
-	"github.com/otter-im/identity-backend/pkg/rpc"
+	"github.com/otter-im/identity-service/internal/config"
+	"github.com/otter-im/identity-service/pkg/rpc"
 	"golang.org/x/exp/rand"
 	"google.golang.org/grpc"
 	mathRand "math/rand"

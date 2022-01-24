@@ -1,11 +1,12 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"github.com/go-pg/migrations/v8"
 	"github.com/golang/glog"
-	"github.com/otter-im/identity-backend/internal/app"
+	"github.com/otter-im/identity-service/internal/app"
 	"os"
 )
 
@@ -25,8 +26,12 @@ func main() {
 	flag.Usage = usage
 	flag.Parse()
 
-	ctx := app.Init()
-	defer app.Exit(ctx)
+	app.Init()
+	defer func() {
+		if err := app.Exit(context.Background()); err != nil {
+			glog.Error(err)
+		}
+	}()
 
 	oldVersion, newVersion, err := migrations.Run(app.Postgres(), flag.Args()...)
 	if err != nil {
