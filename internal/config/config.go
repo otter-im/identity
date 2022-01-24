@@ -14,19 +14,11 @@ func Environment() string {
 }
 
 func ServiceHost() string {
-	return envString("IDENTITY_SERVICE_HOST", "0.0.0.0")
+	return envString("SERVICE_HOST", "0.0.0.0")
 }
 
 func ServicePort() string {
-	return fmt.Sprintf("%v", envInt("IDENTITY_SERVICE_PORT", 50050))
-}
-
-func PasswordMinLength() int {
-	return envInt("PASSWORD_MIN_LENGTH", 12)
-}
-
-func PasswordBcryptCost() int {
-	return envInt("PASSWORD_BCRYPT_COST", 12)
+	return fmt.Sprintf("%v", envInt("SERVICE_PORT", 50050))
 }
 
 func PostgresAddress() string {
@@ -64,7 +56,7 @@ func RedisPassword() string {
 }
 
 func RedisDB() int {
-	return envInt("REDIS_DB", 0)
+	return envInt("REDIS_DATABASE", 0)
 }
 
 func envString(key string, v string) string {
