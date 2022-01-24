@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "github.com/otter-im/identity-backend/internal/rpc";
+
+package service;
+
+service LookupService {
+  rpc Authorize(AuthorizationRequest) returns (AuthorizationResponse) {}
+}
+
+message AuthorizationRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message AuthorizationResponse {
+  Status status = 1;
+
+  optional bytes id = 2;
+  optional string username = 3;
+
+  enum Status {
+    FAIL_MISMATCHED_PASSWORD = 0;
+    SUCCESS = 1;
+  }
+}
