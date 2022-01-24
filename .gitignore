@@ -49,4 +49,3 @@ $RECYCLE.BIN/
 *.msp
 *.lnk
 go.sum
-*.pb.go
