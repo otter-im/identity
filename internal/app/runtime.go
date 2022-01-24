@@ -2,11 +2,11 @@ package app
 
 import (
 	"context"
-	"github.com/golang/glog"
 	"github.com/otter-im/identity-service/internal/config"
 	"github.com/otter-im/identity-service/pkg/rpc"
 	"golang.org/x/exp/rand"
 	"google.golang.org/grpc"
+	"log"
 	mathRand "math/rand"
 	"net"
 	"time"
@@ -29,7 +29,7 @@ func Run() error {
 
 	srv := grpc.NewServer()
 	rpc.RegisterLookupServiceServer(srv, &LookupService{})
-	glog.Infof("service listening on %v", listener.Addr())
+	log.Printf("service listening on %v\n", listener.Addr())
 	if err = srv.Serve(listener); err != nil {
 		return err
 	}

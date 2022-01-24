@@ -12,8 +12,8 @@ WORKDIR ./build
 RUN go mod download && \
     go mod verify
 
-RUN scripts/build_container.sh
+RUN scripts/build.sh
 
 FROM alpine:latest
-COPY --from=0 /go/build/dist/identity-service /usr/bin/identity-service
-CMD ["/usr/bin/identity-service", "-logtostderr"]
+COPY --from=0 /go/build/dist/otter-identity /usr/bin/otter-identity
+CMD ["/usr/bin/otter-identity"]

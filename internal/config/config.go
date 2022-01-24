@@ -2,7 +2,7 @@ package config
 
 import (
 	"fmt"
-	"github.com/golang/glog"
+	"log"
 	"net"
 	"os"
 	"strconv"
@@ -43,7 +43,7 @@ func RedisNodes() map[string]string {
 	for _, node := range strings.Split(nodes, ",") {
 		host, _, err := net.SplitHostPort(node)
 		if err != nil {
-			glog.Warningln(err)
+			log.Print(err)
 			continue
 		}
 		result[host] = node
@@ -75,7 +75,7 @@ func envInt(key string, v int) int {
 
 	result, err := strconv.Atoi(resultString)
 	if err != nil {
-		glog.Warningf("invalid environment variable \"%s\", using default of %v\n", key, v)
+		log.Printf("invalid environment variable \"%s\", using default of %v\n", key, v)
 		return v
 	}
 	return result

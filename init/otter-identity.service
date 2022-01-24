@@ -1,0 +1,46 @@
+[Unit]
+Description = Otter Social (otter-identity)
+After = network.target
+
+[Service]
+Type = simple
+User = otter
+WorkingDirectory = /var/lib/otter
+Environment = "SERVICE_ENV=prod"
+Environment = "SERVICE_PORT=50050"
+ExecStart = /usr/bin/otter-identity
+ExecReload = /usr/bin/kill -SIGUSR1 $MAINPID
+TimeoutSec = 15
+Restart = always
+ProcSubset = pid
+ProtectProc = invisible
+CapabilityBoundingSet =
+NoNewPrivileges = true
+ProtectSystem = true
+PrivateDevices = true
+PrivateUsers = true
+ProtectHostname = true
+ProtectKernelLogs = true
+ProtectKernelModules = true
+ProtectKernelTunables = true
+ProtectControlGroups = true
+RestrictAddressFamilies = AF_INET
+RestrictAddressFamilies = AF_INET6
+RestrictAddressFamilies = AF_NETLINK
+RestrictAddressFamilies = AF_UNIX
+RestrictNamespaces = true
+LockPersonality = true
+RestrictRealtime = true
+RestrictSUIDSGID = true
+RemoveIPC = true
+PrivateMounts = true
+ProtectClock = true
+SystemCallArchitectures = native
+SystemCallFilter = ~@cpu-emulation @debug @keyring @ipc @mount @obsolete @privileged @setuid
+SystemCallFilter = @chown
+SystemCallFilter = pipe
+SystemCallFilter = pipe2
+ReadWritePaths = /var/lib/otter
+
+[Install]
+WantedBy = multi-user.target

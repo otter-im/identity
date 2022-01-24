@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 package=cmd/service.go
-package_name=identity-service
+package_name=otter-identity
 version=0.0.1
 build_dir=./dist
 # For cross-compilation
@@ -9,12 +9,8 @@ CGO=0
 
 : "${SERVICE_ENV:=dev}"
 
-echo "OS: ${GOOS}"
-echo "Architecture: ${GOARCH}"
-echo "Environment: ${SERVICE_ENV}"
-
 output_name=$package_name
-if [ $GOOS = "windows" ]; then
+if [ "$GOOS" = "windows" ]; then
   output_name+='.exe'
 fi
 
