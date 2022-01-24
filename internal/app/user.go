@@ -21,7 +21,7 @@ func SelectUser(ctx context.Context, id uuid.UUID) (*User, error) {
 	user := new(User)
 	if err := RedisCache().Once(&cache.Item{
 		Ctx:   ctx,
-		Key:   fmt.Sprintf("user_by_id:%s", id.String()),
+		Key:   fmt.Sprintf("user:%s", id.String()),
 		Value: user,
 		TTL:   15 * time.Minute,
 		Do: func(item *cache.Item) (interface{}, error) {
