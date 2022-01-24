@@ -9,7 +9,6 @@ import (
 
 type LookupService struct {
 	rpc.UnimplementedLookupServiceServer
-	mainCtx context.Context
 }
 
 func (s *LookupService) Authorize(ctx context.Context, request *rpc.AuthorizationRequest) (*rpc.AuthorizationResponse, error) {
@@ -19,8 +18,6 @@ func (s *LookupService) Authorize(ctx context.Context, request *rpc.Authorizatio
 	}
 
 	select {
-	case <-s.mainCtx.Done():
-		return nil, errors.New("server stopping")
 	case <-ctx.Done():
 		return nil, errors.New("request cancelled")
 	default:
