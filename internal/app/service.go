@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	argonTime      = 2
-	argonMemory    = 64 * 1024
-	argonKeyLength = 32
+	argonIterations = 3
+	argonMemory     = 64 * 1024
+	argonKeyLength  = 32
 )
 
 var (
@@ -41,7 +41,7 @@ func (s *LookupService) Authorize(ctx context.Context, request *rpc.Authorizatio
 	default:
 	}
 
-	passwordKey := argon2.IDKey([]byte(request.Password), user.Salt[:], argonTime, argonMemory, argonThreads, argonKeyLength)
+	passwordKey := argon2.IDKey([]byte(request.Password), user.Salt[:], argonIterations, argonMemory, argonThreads, argonKeyLength)
 	if bytes.Compare(passwordKey, user.Hash[:]) != 0 {
 		return &rpc.AuthorizationResponse{
 			Status: rpc.AuthorizationResponse_FAIL,
