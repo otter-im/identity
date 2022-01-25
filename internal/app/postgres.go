@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"github.com/go-pg/pg/v10"
 	"github.com/otter-im/identity/internal/config"
 	"sync"
@@ -22,7 +21,7 @@ func Postgres() *pg.DB {
 		}
 
 		pgMain = pg.Connect(options)
-		AddExitHook(func(ctx context.Context) error {
+		AddExitHook(func() error {
 			if err := pgMain.Close(); err != nil {
 				return err
 			}

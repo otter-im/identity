@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"github.com/otter-im/identity/internal/config"
 	"github.com/otter-im/identity/pkg/rpc"
 	"golang.org/x/exp/rand"
@@ -13,7 +12,7 @@ import (
 )
 
 var (
-	exitHooks = make([]func(ctx context.Context) error, 0)
+	exitHooks = make([]func() error, 0)
 )
 
 func Init() {
@@ -28,7 +27,9 @@ func Run() error {
 	}
 
 	srv := grpc.NewServer()
-	rpc.RegisterLookupServiceServer(srv, &LookupService{})
+	rpc.RegisterLookupServiceServer(srv, &LookupService{
+		Users: &userDto{},
+	})
 	log.Printf("service listening on %v\n", listener.Addr())
 	if err = srv.Serve(listener); err != nil {
 		return err
@@ -36,15 +37,9 @@ func Run() error {
 	return nil
 }
 
-func Exit(ctx context.Context) error {
+func Exit() error {
 	for _, hook := range exitHooks {
-		select {
-		case <-ctx.Done():
-			return nil
-		default:
-		}
-
-		err := hook(ctx)
+		err := hook()
 		if err != nil {
 			return err
 		}
@@ -52,6 +47,6 @@ func Exit(ctx context.Context) error {
 	return nil
 }
 
-func AddExitHook(hook func(ctx context.Context) error) {
+func AddExitHook(hook func() error) {
 	exitHooks = append(exitHooks, hook)
 }

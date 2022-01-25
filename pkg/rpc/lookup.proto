@@ -14,13 +14,6 @@ message AuthorizationRequest {
 }
 
 message AuthorizationResponse {
-  Status status = 1;
-
-  optional bytes id = 2;
-  optional string username = 3;
-
-  enum Status {
-    FAIL = 0;
-    SUCCESS = 1;
-  }
+  bytes id = 2;
+  string username = 3;
 }

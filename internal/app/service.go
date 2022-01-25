@@ -18,35 +18,31 @@ const (
 
 type LookupService struct {
 	rpc.UnimplementedLookupServiceServer
+	Users UserService
 }
 
 func (s *LookupService) Authorize(ctx context.Context, request *rpc.AuthorizationRequest) (*rpc.AuthorizationResponse, error) {
-	user, err := SelectUserByUsername(ctx, request.GetUsername())
+	user, err := s.Users.SelectUserByUsername(ctx, request.GetUsername())
 	if err != nil {
 		if err == pg.ErrNoRows {
-			return &rpc.AuthorizationResponse{
-				Status: rpc.AuthorizationResponse_FAIL,
-			}, nil
+			return nil, errors.New("unknown user")
 		}
 		return nil, err
 	}
 
 	select {
 	case <-ctx.Done():
-		return nil, errors.New("request cancelled")
+		return nil, errors.New("context canceled")
 	default:
 	}
 
 	passwordKey := argon2.IDKey([]byte(request.Password), user.Salt[:], argonIterations, argonMemory, argonThreads, argonKeyLength)
 	if bytes.Compare(passwordKey, user.Hash[:]) != 0 {
-		return &rpc.AuthorizationResponse{
-			Status: rpc.AuthorizationResponse_FAIL,
-		}, nil
+		return nil, errors.New("password mismatch")
 	}
 
 	return &rpc.AuthorizationResponse{
-		Status:   rpc.AuthorizationResponse_SUCCESS,
 		Id:       user.Id[:],
-		Username: &user.Username,
+		Username: user.Username,
 	}, nil
 }

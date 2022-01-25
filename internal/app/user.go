@@ -13,12 +13,19 @@ type User struct {
 
 	Id           uuid.UUID `pg:"id"`
 	Username     string    `json:"username" pg:"username"`
-	Hash         [32]byte  `json:"-" pg:"hash"`
-	Salt         [16]byte  `json:"-" pg:"salt"`
+	Hash         []byte    `json:"-" pg:"hash"`
+	Salt         []byte    `json:"-" pg:"salt"`
 	CreationDate time.Time `json:"creation_date" pg:"creation_date"`
 }
 
-func SelectUser(ctx context.Context, id uuid.UUID) (*User, error) {
+type UserService interface {
+	SelectUser(ctx context.Context, id uuid.UUID) (*User, error)
+	SelectUserByUsername(ctx context.Context, username string) (*User, error)
+}
+
+type userDto struct{}
+
+func (u *userDto) SelectUser(ctx context.Context, id uuid.UUID) (*User, error) {
 	user := new(User)
 	if err := RedisCache().Once(&cache.Item{
 		Ctx:   ctx,
@@ -45,7 +52,7 @@ func selectUser(ctx context.Context, id uuid.UUID) (*User, error) {
 	return user, nil
 }
 
-func SelectUserByUsername(ctx context.Context, username string) (*User, error) {
+func (u *userDto) SelectUserByUsername(ctx context.Context, username string) (*User, error) {
 	user := new(User)
 	if err := Postgres().
 		ModelContext(ctx, user).

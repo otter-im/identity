@@ -13,17 +13,6 @@ jobs:
     container: golang:1.17-alpine
     env:
       CGO_ENABLED: 0
-    services:
-      redis:
-        image: redis:6-alpine
-        options: --entrypoint redis-server
-      postgres:
-        image: postgres:13-alpine
-        env:
-          POSTGRES_USER: actions
-          POSTGRES_PASSWORD: actions
-          POSTGRES_DB: otter_identity
-        options: "--health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -31,20 +20,5 @@ jobs:
       - name: Download modules
         run: go mod download
 
-      - name: Initialize DB
-        run: go run cmd/migrate_db/migrate.go init && go run cmd/migrate_db/migrate.go
-        env:
-          POSTGRES_USER: actions
-          POSTGRES_PASSWORD: actions
-          POSTGRES_ADDRESS: "postgres:5432"
-          POSTGRES_DATABASE: otter_identity
-          REDIS_NODES: "redis:6379"
-
       - name: "go test internal/app"
-        run: "go test github.com/otter-im/identity/internal/app/"
-        env:
-          POSTGRES_USER: actions
-          POSTGRES_PASSWORD: actions
-          POSTGRES_ADDRESS: "postgres:5432"
-          POSTGRES_DATABASE: otter_identity
-          REDIS_NODES: "redis:6379"
+        run: go test github.com/otter-im/identity/internal/app/
