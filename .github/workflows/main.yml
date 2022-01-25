@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     container: golang:1.17-alpine
     env:
       CGO_ENABLED: 0
