@@ -7,17 +7,13 @@ import (
 	"github.com/go-pg/pg/v10"
 	"github.com/otter-im/identity/pkg/rpc"
 	"golang.org/x/crypto/argon2"
-	"runtime"
 )
 
 const (
 	argonIterations = 3
 	argonMemory     = 64 * 1024
 	argonKeyLength  = 32
-)
-
-var (
-	argonThreads = uint8(runtime.NumCPU())
+	argonThreads    = uint8(8)
 )
 
 type LookupService struct {
