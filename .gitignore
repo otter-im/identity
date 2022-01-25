@@ -48,5 +48,4 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.lnk
-go.sum
 dist/
