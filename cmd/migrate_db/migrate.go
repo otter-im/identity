@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"github.com/go-pg/migrations/v8"
@@ -28,7 +27,7 @@ func main() {
 
 	app.Init()
 	defer func() {
-		if err := app.Exit(context.Background()); err != nil {
+		if err := app.Exit(); err != nil {
 			glog.Error(err)
 		}
 	}()
