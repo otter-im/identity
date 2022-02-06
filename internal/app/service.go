@@ -7,6 +7,7 @@ import (
 	"github.com/go-pg/pg/v10"
 	"github.com/otter-im/identity/pkg/rpc"
 	"golang.org/x/crypto/argon2"
+	"log"
 )
 
 const (
@@ -27,6 +28,7 @@ func (s *LookupService) Authorize(ctx context.Context, request *rpc.Authorizatio
 		if err == pg.ErrNoRows {
 			return nil, errors.New("unknown user")
 		}
+		log.Print(err)
 		return nil, err
 	}
 
