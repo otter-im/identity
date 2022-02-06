@@ -10,7 +10,6 @@ An OAuth2 identity provider that operates over gRPC.
 ## Development Setup
 
 ```shell
-go generate
 go run cmd/migrate_db/migrate.go init
 go run cmd/service.go
 ```
