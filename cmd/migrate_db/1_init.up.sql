@@ -1,3 +1,5 @@
+GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO otter_identity;
+
 CREATE TABLE users
 (
     id            uuid      DEFAULT gen_random_uuid() PRIMARY KEY,
