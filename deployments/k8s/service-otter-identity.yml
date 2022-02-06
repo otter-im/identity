@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otter-identity-deployment
+  labels:
+    app: otter-identity
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: otter-identity
+  template:
+    metadata:
+      labels:
+        app: otter-identity
+    spec:
+      containers:
+        - name: otter-identity
+          image: quay.io/otter-im/identity:latest
+          ports:
+            - containerPort: 50050
+          env:
+            - name: SERVICE_ENV
+              value: prod
+            - name: POSTGRES_ADDRESS
+              value: $(OTTER_PGDB_POOLER_SERVICE_HOST):$(OTTER_PGDB_POOLER_SERVICE_PORT) # Assume using postgres-operator
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: otter-identity.otter-pgdb.credentials.postgresql.acid.zalan.do
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: otter-identity.otter-pgdb.credentials.postgresql.acid.zalan.do
+                  key: password
