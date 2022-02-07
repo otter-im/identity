@@ -23,4 +23,5 @@ RUN adduser --system --disabled-password --shell /bin/sh --home /var/lib/otter -
 
 USER otter
 WORKDIR /var/lib/otter
+EXPOSE 50050
 CMD ["/usr/bin/otter-identity"]
