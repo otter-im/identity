@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: otter-identity-deployment
+  name: otter-identity
   labels:
     app: otter-identity
 spec:
@@ -34,3 +34,10 @@ spec:
                 secretKeyRef:
                   name: otter-identity.otter-pgdb.credentials.postgresql.acid.zalan.do
                   key: password
+            - name: REDIS_NODES
+              value: $(REDIS_SENTINEL_SERVICE_HOST):$(REDIS_SENTINEL_SERVICE_PORT)
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-sentinel
+                  key: redis-password
