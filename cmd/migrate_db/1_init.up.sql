@@ -1,5 +1,3 @@
-GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA public TO otter_identity;
-
 CREATE TABLE users
 (
     id            uuid      DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -8,6 +6,7 @@ CREATE TABLE users
     salt          bytea               NOT NULL,
     creation_date timestamp DEFAULT current_timestamp
 );
+GRANT SELECT,INSERT,UPDATE,DELETE ON users TO otter_identity;
 
 /* tinyfluffs | changeme */
 INSERT into users(id, username, hash, salt, creation_date)
