@@ -34,7 +34,11 @@ func PostgresPassword() string {
 }
 
 func PostgresDatabase() string {
-	return envString("POSTGRES_DATABASE", "otter_identity")
+	return envString("POSTGRES_DATABASE", "identity")
+}
+
+func PostgresSSL() bool {
+	return envBool("POSTGRES_SSL", false)
 }
 
 func RedisNodes() map[string]string {
@@ -79,4 +83,12 @@ func envInt(key string, v int) int {
 		return v
 	}
 	return result
+}
+
+func envBool(key string, v bool) bool {
+	resultString := envString(key, fmt.Sprintf("%v", v))
+	if resultString == "true" {
+		return true
+	}
+	return false
 }
